@@ -44,20 +44,21 @@ func _on_LoginButton_pressed():
 
 
 func send_credentials():
-	var message = {'authenticate_credentials': {'user': user_line_edit.text, 'password': password_line_edit.text}}
-	
+	var message = {'authenticate_credentials':
+		{'user': user_line_edit.text, 'password': password_line_edit.text}
+		}
 	var packet = PacketPeerUDP.new()
-	packet.connect_to_host(ADDRESS, PORT)
+	packet.connect_to_host(ADDRESS,PORT)
 	packet.put_var(JSON.stringify(message))
-	
 	while packet.wait() == OK:
 		var response = JSON.parse_string(packet.get_var())
 		if "token" in response:
 			AuthenticationCredentials.session_token = response['token']
 			AuthenticationCredentials.user = message['authenticate_credentials']['user']
-			error_label.text = "logged!!"
-			get_tree().change_scene_to_file(avatar_screen_scene)
+			error_label.text = "Logged!"
+			get_tree().change_scene_to_file("res://02.sending-and-receiving-data/AvatarScreen.tscn")
 			break
 		else:
-			error_label.text = "login failed, check your credentials"
+			error_label.text = "login failed, check credentials."
 			break
+		

@@ -36,14 +36,14 @@ func load_database(path_to_database_file):
 
 func authenticate_player(peer, message):
 	var credentials = message["authenticate_credentials"]
-	if "user" in credentials and "password" in credentials:
+	if 'user' in credentials and 'password' in credentials:
 		var user = credentials['user']
 		var password = credentials['password']
 		if user in database.keys():
-			if database[user]['password'] == password:
+			if password == database[user]['password']:
 				var token = randi()
-				var response = {'token': token, 'user': user}
 				logged_users[user] = token
+				var response = {'token': token}
 				peer.put_var(JSON.stringify(response))
 			else:
 				peer.put_var("")
@@ -51,19 +51,20 @@ func authenticate_player(peer, message):
 
 func get_authentication_token(peer, message):
 	var credentials = message
-	if "user" in credentials:
+	if 'user' in credentials:
 		if credentials['token'] == logged_users[credentials['user']]:
 			var token = logged_users[credentials['user']]
-			var response = {'token': token, 'user': credentials['user']}
 			peer.put_var(JSON.stringify(token))
+			
 
 
 func get_avatar(peer, message):
 	var dictionary = message
 	if "user" in dictionary:
-		var user = dictionary['user']
+		var user = dictionary["user"]
 		if dictionary['token'] == logged_users[user]:
 			var avatar = database[dictionary['user']]['avatar']
 			var nick_name = database[dictionary['user']]['name']
 			var response = {"avatar": avatar, "name": nick_name}
 			peer.put_var(JSON.stringify(response))
+			

@@ -14,9 +14,10 @@ func _ready():
 
 
 func request_authentication(packet):
-	var request = {'get_authentication_token': true, "user": AuthenticationCredentials.user, "token": AuthenticationCredentials.session_token}
+	var request = {'get_authentication_token': true,
+		"user": AuthenticationCredentials.user,
+		"token": AuthenticationCredentials.session_token}
 	packet.put_var(JSON.stringify(request))
-
 	while packet.wait() == OK:
 		var data = JSON.parse_string(packet.get_var())
 		if data == AuthenticationCredentials.session_token:
@@ -25,9 +26,10 @@ func request_authentication(packet):
 
 
 func request_avatar(packet):
-	var request = {'get_avatar': true, 'token': AuthenticationCredentials.session_token, "user": AuthenticationCredentials.user}
+	var request = {'get_avatar': true, 
+		'token': AuthenticationCredentials.session_token,
+		'user': AuthenticationCredentials.user}
 	packet.put_var(JSON.stringify(request))
-	
 	while packet.wait() == OK:
 		var data = JSON.parse_string(packet.get_var())
 		if "avatar" in data:
@@ -35,3 +37,4 @@ func request_avatar(packet):
 			texture_rect.texture = texture
 			label.text = data['name']
 			break
+		

@@ -3,8 +3,8 @@ extends Control
 const ADDRESS = "127.0.0.1"
 const PORT = 9999
 
-@export_file("*.tscn") var quiz_screen_scene
-
+#@export_file("*.tscn") var quiz_screen_scene
+@export var quiz_screen_scene = "res://05.online-quiz/QuizScreenClient.gd"
 @onready var user_line_edit = $UserLineEdit
 @onready var password_line_edit = $PasswordLineEdit
 @onready var error_label = $ErrorLabel
@@ -85,7 +85,7 @@ func _on_StartButton_pressed():
 
 @rpc
 func add_logged_player(player_name):
-	logged_players_label.text = logged_players_label.text + "\n%s" % player_name
+	logged_players_label.text += "\n%s" % player_name
 
 
 @rpc

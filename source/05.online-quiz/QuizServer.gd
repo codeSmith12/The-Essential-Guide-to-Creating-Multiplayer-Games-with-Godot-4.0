@@ -45,6 +45,7 @@ func authenticate_player(user, password):
 func start_game():
 	rpc("start_game")
 	get_tree().change_scene_to_file(quiz_screen_scene_path)
+	
 
 
 @rpc

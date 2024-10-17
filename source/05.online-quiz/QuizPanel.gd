@@ -33,9 +33,9 @@ func unlock_answers():
 
 @rpc("call_local")
 func update_winner(winner_name):
-	question_label.text = "%s won the round!!" % winner_name
+	question_label.text = "%s has won the round!" % winner_name
 	lock_answers()
-
+	
 
 @rpc("call_local")
 func player_missed(loser_name):
@@ -45,18 +45,20 @@ func player_missed(loser_name):
 
 @rpc("any_peer", "call_local")
 func update_question(new_question_index):
+	print("popping at", new_question_index)
 	var question = available_questions.pop_at(new_question_index)
 	if not question == null:
 		question_label.text = questions[question]['text']
 		correct_answer = questions[question]['correct_answer_index']
-		for i in range(0, 4):
+		for i in range(0,4):
 			var alternative = questions[question]['alternatives'][i]
 			answer_container.get_child(i).text = alternative
-		unlock_answers()
+			unlock_answers()
 	else:
 		for answer in answer_container.get_children():
-			question_label.text = "No more questions"
+			question_label.text = "No more questions."
 		lock_answers()
+		
 
 
 func connect_answer_buttons():

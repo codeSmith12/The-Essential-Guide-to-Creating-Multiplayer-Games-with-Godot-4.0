@@ -3,19 +3,20 @@
 [ext_resource type="PackedScene" uid="uid://b8xc43dpux62e" path="res://06.building-online-checkers/CheckerBoard.tscn" id="1_estyv"]
 [ext_resource type="Script" path="res://06.building-online-checkers/CheckersGame.gd" id="1_rs6j7"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bfts0"]
-bg_color = Color(0.215686, 0.215686, 0.215686, 1)
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y3h5c"]
 bg_color = Color(0.34902, 0.34902, 0.34902, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a1hno"]
 bg_color = Color(0.0901961, 0.0901961, 0.0901961, 1)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bfts0"]
+bg_color = Color(0.215686, 0.215686, 0.215686, 1)
+
 [node name="CheckersGame" type="Node"]
 script = ExtResource("1_rs6j7")
 
 [node name="CheckerBoard" parent="." instance=ExtResource("1_estyv")]
+rendering_quadrant_size = 64
 
 [node name="HUD" type="Control" parent="."]
 visible = false
@@ -71,9 +72,9 @@ offset_right = 64.0
 offset_bottom = -208.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_styles/normal = SubResource("StyleBoxFlat_bfts0")
 theme_override_styles/hover = SubResource("StyleBoxFlat_y3h5c")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_a1hno")
+theme_override_styles/normal = SubResource("StyleBoxFlat_bfts0")
 text = "Rematch"
 
 [connection signal="player_won" from="CheckerBoard" to="." method="_on_checker_board_player_won"]

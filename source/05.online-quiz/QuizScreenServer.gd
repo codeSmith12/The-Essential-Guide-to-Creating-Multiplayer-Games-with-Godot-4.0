@@ -13,19 +13,19 @@ extends Control
 func _ready():
 	timer.start(3.0)
 	await(timer.timeout)
-	generate_new_question()
+	#generate_new_question()
 
 
 @rpc("any_peer")
 func answered(user):
-	quiz_panel.rpc("update_winner", database[user]["name"])
+	quiz_panel.rpc("update_winner", database[user]['name'])
 	timer.start(turn_delay_in_seconds)
 	wait_label.rpc("wait", turn_delay_in_seconds)
 
 
 @rpc("any_peer")
 func missed(user):
-	quiz_panel.rpc("player_missed", database[user]["name"])
+	quiz_panel.rpc("player_missed", database[user]['name'])
 	timer.start(turn_delay_in_seconds)
 	wait_label.rpc("wait", turn_delay_in_seconds)
 
@@ -35,7 +35,8 @@ func _on_timer_timeout():
 
 
 func generate_new_question():
+	print(quiz_panel)
 	var max_index = quiz_panel.available_questions.size() -1
-	var question_index = randi_range(0, max_index)
+	var question_index = 0 #randi_range(0, max_index)
 	quiz_panel.rpc("update_question", question_index)
 	quiz_panel.update_question(question_index)
